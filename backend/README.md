@@ -19,12 +19,11 @@ $ killall -15 mongod
 $ mongod -v --dbpath ./data/db
 
 2. initiate node.js project
-- in backend directory, type:
-$ npm init
+<!-- - in backend directory, type:
+$ npm init -->
 
 3. install dependencies:
-$ npm install --save-dev babel babel-cli babel-preset-es2015 babel-preset-stage-0 nodemon 
-$ npm install --save body-parser express moment mongoose morgan
+$ npm install
 
 4. pull from git!
 
