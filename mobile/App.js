@@ -1,5 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import * as firebase from 'firebase';
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 export default class App extends React.Component {
   render() {

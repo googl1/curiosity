@@ -9,7 +9,7 @@ var entrySchema = new Schema({
   author: String,
   user_tags: [String],
   tags: [String],
-  img: String,
+  img: String, // base64 jpg?
   score: { type: Number, min: 0, max: 1, default: 0 }
 });
 
