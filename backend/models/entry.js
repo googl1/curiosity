@@ -7,8 +7,12 @@ var entrySchema = new Schema({
     unique: true,
   },
   author: String,
-  category: String,
-  planet: String,
+  user_tags: [String],
+  tags: [String],
+  img: {
+     data: Buffer, 
+     contentType: String 
+  }
 });
 
 // Export Mongoose model
