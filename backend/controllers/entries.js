@@ -1,4 +1,4 @@
-import Movie from '../models/entry';
+import Entry from '../models/entry';
 import moment from 'moment';
 
 // Hardcode for simplicity
