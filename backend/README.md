@@ -25,3 +25,11 @@ $ npm init
 3. install dependencies:
 $ npm install --save-dev babel babel-cli babel-preset-es2015 babel-preset-stage-0 nodemon 
 $ npm install --save body-parser express moment mongoose morgan
+
+4. pull from git!
+
+5. test
+$ npm start
+
+in browser, try to reach:
+http://127.0.0.1:3000/
