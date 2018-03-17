@@ -6,7 +6,7 @@ var entrySchema = new Schema({
     type: String,
     unique: true,
   },
-  poster: String,
+  author: String,
   category: String,
   planet: int,
 });
