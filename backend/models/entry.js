@@ -8,7 +8,7 @@ var entrySchema = new Schema({
   },
   author: String,
   category: String,
-  planet: int,
+  planet: String,
 });
 
 // Export Mongoose model
