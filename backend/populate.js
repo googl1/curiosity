@@ -5,8 +5,8 @@ const entries = [
   {
     title: 'Apple',
     author: 'Rick',
-    category: 'Fruit',
-    planet: 'Earth',
+    tags: 'Fruit',
+    user_tags: 'Earth',
   },
   {
     title: 'Dog',
@@ -19,9 +19,9 @@ const entries = [
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost/entries');
 
-// Go through each movie
+// Go through each entry
 entries.map(data => {
-  // Initialize a model with movie data
+  // Initialize a model with entry data
   const entry = new Entry(data);
   // and save it into the database
   entry.save();

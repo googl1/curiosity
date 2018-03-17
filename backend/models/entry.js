@@ -9,10 +9,8 @@ var entrySchema = new Schema({
   author: String,
   user_tags: [String],
   tags: [String],
-  img: {
-     data: Buffer, 
-     contentType: String 
-  }
+  img: String,
+  score: { type: Number, min: 0, max: 1, default: 0 }
 });
 
 // Export Mongoose model
