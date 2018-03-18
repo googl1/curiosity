@@ -57,9 +57,12 @@ class CameraCapture extends React.Component {
 
     takePicture = async function() {
         if (this.camera) {
-          this.camera.takePictureAsync({ base64: true }).then(data => {
-            //   console.log(data.base64);
-              this.props.navigation.navigate('CaptureAnalysis')
+          this.camera.takePictureAsync().then(data => {
+            //console.log(data.base64);
+            this.props.navigation.navigate({
+                routeName: 'CaptureAnalysis',
+                params: { img: data.uri }
+            })
           });
         }
     }
