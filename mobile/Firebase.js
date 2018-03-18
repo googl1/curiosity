@@ -113,8 +113,6 @@ class Firebase {
     var n = allNames.length;
     var allTags = this.unfuck(await this.getAllTags(n));
 
-//    console.log(allTags);
-
     var matches = [];
     for (var i in allTags) {
      matches.push(this.intersect(tags, allTags[i]));
@@ -122,32 +120,18 @@ class Firebase {
 
     var order = Array.apply(null, Array(n)).map(function (_, i) {return i;});
 
-    /*
-    order = order.sort(function(a, b) {
-      return matches.indexOf(a) - matches.indexOf(b);
-    });
-    order = order.reverse();
-    matches = matches.sort().reverse();
-    //*/
+    // all this just to sort order and matches both by matches
     var list = [];
     for (var j = 0; j < order.length; j++)
       list.push({'order': order[j], 'matches': matches[j]});
-
-    //2) sort:
     list.sort(function(a, b) {
       return ((a.matches < b.matches) ? -1 : ((a.matches == b.matches) ? 0 : 1));
-    //Sort could be modified to, for example, sort on the age
-    // if the name is the same.
-});
+    });
     list.reverse();
-
-//3) separate them back out:
-for (var k = 0; k < list.length; k++) {
-    order[k] = list[k].order;
-    matches[k] = list[k].matches;
-}
-//    console.log(order);
- //   console.log(matches);
+    for (var k = 0; k < list.length; k++) {
+      order[k] = list[k].order;
+      matches[k] = list[k].matches;
+    }
 
     var entries = [];
     for (i in order) {
