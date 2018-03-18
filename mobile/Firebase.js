@@ -9,9 +9,66 @@ class Firebase {
     firebase.initializeApp(conf.getConfig());
     this.db = firebase.database();
   }
-  
+
+  async publishEntry(e) {
+    
+    // get everything
+    var allNames = this.unfuck(await this.getAllNames());
+    var allAuthors = this.unfuck(await this.getAllAuthors());
+    var allImages = this.unfuck(await this.getAllImages());
+    var n = allNames.length;
+    var allTags = this.unfuck(await this.getAllTags(n));
+    var allUserTags = this.unfuck(await this.getAllUserTags(n));
+
+    for (i in allTags)
+      allTags[i] = this.unfuck(allTags[i]);
+    for (i in allTags)
+      allUserTags[i] = this.unfuck(allUserTags[i]);
+
+    this.writeNewPost(allNames, 'names', e.name, n);
+    this.writeNewPost(allAuthors, 'authors', e.author, n);
+    this.writeNewPost(allImages, 'images', e.image, n);
+    this.writeNewPost(this.makeKeyValue(allTags), 'tags', e.tags, n);
+    this.writeNewPost(this.makeKeyValue(allUserTags), 'user_tags', e.user_tags, n);
+  }
+
+  makeKeyValue(a) {
+    for (i in a) {
+      var object = {};
+
+      for (j in a[i]) {
+        object[j] = a[i][j]
+      }
+      a[i] = object;
+    }
+    return a;
+  }
+
+  writeNewPost(data, name, e, n) {
+    var object = {};
+
+    for (var i = 0; i < n; i++) {
+      object[i] = data[i];
+    }
+    object[n] = e;
+    this.db.ref("entries1/" + name).set(object);
+  }
+
   async getAllNames() {
     return await this.db.ref("entries/names").once("value", function(snapshot) {
+      return snapshot.val();
+    });
+  }
+
+  async getAllAuthors() {
+    return await this.db.ref("entries/authors").once("value", function(snapshot) {
+      //console.debug(snapshot.val());
+      return snapshot.val();
+    });
+  }
+
+  async getAllImages() {
+    return await this.db.ref("entries/images").once("value", function(snapshot) {
       //console.debug(snapshot.val());
       return snapshot.val();
     });
@@ -23,6 +80,18 @@ class Firebase {
     for (i = 0; i < n; i++) {
       var ref = this.db.ref("entries/tags/" + i);
       tags[i] =  this.unfuck(await ref.orderByChild("tags").once("value", function(snapshot) {
+        return snapshot.val();
+      }));
+    }
+    return tags;
+  }
+
+  async getAllUserTags(n) {
+    var tags = {};
+    //console.debug(n);
+    for (i = 0; i < n; i++) {
+      var ref = this.db.ref("entries/user_tags/" + i);
+      tags[i] =  this.unfuck(await ref.orderByChild("user_tags").once("value", function(snapshot) {
         return snapshot.val();
       }));
     }
@@ -86,10 +155,18 @@ class Firebase {
 
     var order = Array.apply(null, Array(n)).map(function (_, i) {return i;});
 
-    order.sort(function(a, b) {
-      return matches.indexOf(a) - matches.indexOf(b);
+    // all this just to sort order and matches both by matches
+    var list = [];
+    for (var j = 0; j < order.length; j++)
+      list.push({'order': order[j], 'matches': matches[j]});
+    list.sort(function(a, b) {
+      return ((a.matches < b.matches) ? -1 : ((a.matches == b.matches) ? 0 : 1));
     });
-    order = order.reverse();
+    list.reverse();
+    for (var k = 0; k < list.length; k++) {
+      order[k] = list[k].order;
+      matches[k] = list[k].matches;
+    }
 
     var entries = [];
     for (i in order) {
@@ -105,6 +182,7 @@ class Firebase {
         new Entry(allNames[j], author_j, image_j, user_tags_j));
     }
 
+    //console.log(entries)
 
     return entries;
   }

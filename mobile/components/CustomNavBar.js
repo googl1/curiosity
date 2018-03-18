@@ -8,9 +8,16 @@ import HomeScreen from './HomeScreen';
 import Profile from './Profile';
 import CameraCapture from './CameraCapture';
 import Search from './Search';
+<<<<<<< HEAD
 import MapPreview from './MapPreview'
 import CaptureAnalysis from './CaptureAnalysis'
 import ResultFound from './ResultFound'
+=======
+import MapPreview from './MapPreview';
+import CaptureAnalysis from './CaptureAnalysis';
+import AddingNewData1 from './AddingNewData1';
+
+>>>>>>> 07139e2cbfff1a88a18b9e6c4178bb50c959f108
 
 const CustomBar = TabNavigator(
     {
@@ -109,6 +116,9 @@ const Routes = StackNavigator(
         },
         CaptureAnalysis: {
             screen: CaptureAnalysis
+        },
+        AddData:{
+            screen: AddingNewData1
         },
         HomeScreen: {
             screen: HomeScreen

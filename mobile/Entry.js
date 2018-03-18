@@ -9,13 +9,5 @@ class Entry {
     this.user_tags = user_tags;
     this.tags = tags;
   }
-
-  publish(db) {
-    db.ref("entries/" + this.name).set({
-      user_tags: this.user_tags,
-      image: this.image,
-      author: this.author
-    });
-  }
 }
 export default Entry

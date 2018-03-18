@@ -7,7 +7,6 @@ import Firebase from './Firebase.js';
 import ignoreWarnings from 'react-native-ignore-warnings';
 
 export default class App extends React.Component {
-
   render() {
     ignoreWarnings('Setting a timer');  
     return <CustomNavBar />;
