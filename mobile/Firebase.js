@@ -115,7 +115,7 @@ class Firebase {
    * - matches with the name
    * - matches with the tags
    * (all case INsensitive)
-   */
+   
   searchEntriesByString(str) {
     var allNames = this.unfuck(await this.getAllNames());
     var n = allNames.length;
@@ -127,7 +127,7 @@ class Firebase {
     for (var i in allTags) {
        matches.push(this.intersect(tags, allTags[i]));
     }
-  }
+  }*/
 }
 
 export default Firebase
