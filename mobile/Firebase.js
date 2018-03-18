@@ -240,6 +240,8 @@ class Firebase {
         new Entry(allNames[j], author_j, image_j, user_tags_j, allTags[j]));
     }
 
+    console.log(entries);
+
     return entries;
   }
 }
