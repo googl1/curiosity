@@ -13,6 +13,7 @@ class CaptureAnalysis extends React.Component {
          };
          this.runImageAnalysis = this.runImageAnalysis.bind(this);
          this.goBack = this.goBack.bind(this);
+         this.goForward = this.goForward.bind(this);
          this.updateUI = this.updateUI.bind(this);
     }
 
