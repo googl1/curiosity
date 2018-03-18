@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import StackNavigator from 'react-navigation';
 import CameraCapture from './CameraCapture';
 
 class HomeScreen extends React.Component {
