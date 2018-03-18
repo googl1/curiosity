@@ -109,25 +109,61 @@ class Firebase {
     return entries;
   }
 
+  isVarInArray (v, a) {
+    return a.indexOf(v) > -1
+  }
+
   /* str: a search string (for example "Gnocchi")
    * returns an array of Entry objects.
    * If they exist, they will be in the following order:
    * - matches with the name
    * - matches with the tags
    * (all case INsensitive)
-   
-  searchEntriesByString(str) {
+  */ 
+  async searchEntriesByString(str) {
     var allNames = this.unfuck(await this.getAllNames());
     var n = allNames.length;
     var allTags = this.unfuck(await this.getAllTags(n));
 
-    var matches = [];
-
-    var matches = [];
-    for (var i in allTags) {
-       matches.push(this.intersect(tags, allTags[i]));
+    var order = [];
+    for (var i in allNames) {
+      if (allNames[i].localeCompare(str) == 0)
+        //exact match
+        order.push(i);
     }
-  }*/
+    for (var i in allNames) {
+      if (this.isVarInArray(i, order) == false) {
+        if (allNames[i].indexOf(str) != -1)
+          //substring match
+          order.push(i);
+      }
+    }
+
+    for (var i in allNames) {
+      if (this.isVarInArray(i, order) == false) {
+        for (var j in allTags[i]) {
+          if (allTags[i][j].indexOf(str) != -1) {
+            // substring tag match
+            order.push(i);
+            continue;
+          }
+        }
+      }
+    }
+
+    var entries = [];
+    for (i in order) {
+      var j = order[i];
+      var author_j = (await (this.getAuthor(j)));
+      var image_j = (await this.getImage(j));
+      var user_tags_j = (this.unfuck(await this.getUserTags(j)));
+
+      entries.push(
+        new Entry(allNames[j], author_j, image_j, user_tags_j, allTags[j]));
+    }
+
+    return entries;
+  }
 }
 
 export default Firebase
