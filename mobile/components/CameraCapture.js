@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Camera, Permissions, FileSystem, Vibration } from 'expo';
+import { Camera, Permissions, FileSystem } from 'expo';
 
 class CameraCapture extends React.Component {
     constructor(props) {
@@ -57,9 +57,9 @@ class CameraCapture extends React.Component {
 
     takePicture = async function() {
         if (this.camera) {
-          this.camera.takePictureAsync().then(data => {
-              console.log(data.uri);
-              Vibration.vibrate();
+          this.camera.takePictureAsync({ base64: true }).then(data => {
+            //   console.log(data.base64);
+              this.props.navigation.navigate('CaptureAnalysis')
           });
         }
     }
