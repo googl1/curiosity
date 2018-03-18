@@ -1,8 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera, Permissions, FileSystem, Vibration } from 'expo';
-import CuriosityBar from './NavigationBar.js'
-
 
 class CameraCapture extends React.Component {
     constructor(props) {
@@ -52,7 +50,6 @@ class CameraCapture extends React.Component {
                             </TouchableOpacity>
                         </View>
                     </Camera>
-                    <CuriosityBar style={{flex: 1}}/>
                 </View>
             );
         }
