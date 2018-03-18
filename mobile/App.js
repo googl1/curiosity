@@ -9,7 +9,7 @@ export default class App extends React.Component {
 componentDidMount() {
 
   // Initialize Firebase
-  let fb = new Firebase();
+  //let fb = new Firebase();
 
   /*
   // dummy entries
@@ -18,7 +18,7 @@ componentDidMount() {
   e.publish(db);
   e1.publish(db);
   */
-//  console.debug(fb.searchEntriesByTags(['orchid','cactus']));
+  //console.debug(fb.searchEntriesByTags(['orchid','cactus']));
   // fb.searchEntriesByString("Timbit");
 
 }

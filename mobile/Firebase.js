@@ -9,7 +9,41 @@ class Firebase {
     firebase.initializeApp(conf.getConfig());
     this.db = firebase.database();
   }
-  
+
+  publisEntry(e) {
+    /*
+    // get next index
+    var allNames = this.unfuck(await this.getAllNames());
+    var n = allNames.length;
+    n = n + 1;
+*/
+    this.writeNewPost(e.names, 'names');
+    this.writeNewPost(e.authors, 'authors');
+    this.writeNewPost(e.images, 'images');
+    this.writeNewPost(e.tags, 'tags');
+    this.writeNewPost(e.user_tags, 'user_tags');
+
+    /*db.ref("entries/names/" + n).set({
+      e.name
+      user_tags: this.user_tags,
+      image: this.image,
+      author: this.author
+    });*/
+  }
+
+  writeNewPost(data, name) {
+    // A post entry.
+    var postData = data;
+    // Get a key for a new Post.
+    var newPostKey = firebase.database().ref().child(name).push().key;
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates['/names/' + newPostKey] = postData;
+
+    return this.db.ref().update(updates);
+  }
+
   async getAllNames() {
     return await this.db.ref("entries/names").once("value", function(snapshot) {
       //console.debug(snapshot.val());
@@ -79,6 +113,8 @@ class Firebase {
     var n = allNames.length;
     var allTags = this.unfuck(await this.getAllTags(n));
 
+//    console.log(allTags);
+
     var matches = [];
     for (var i in allTags) {
      matches.push(this.intersect(tags, allTags[i]));
@@ -86,10 +122,32 @@ class Firebase {
 
     var order = Array.apply(null, Array(n)).map(function (_, i) {return i;});
 
-    order.sort(function(a, b) {
+    /*
+    order = order.sort(function(a, b) {
       return matches.indexOf(a) - matches.indexOf(b);
     });
     order = order.reverse();
+    matches = matches.sort().reverse();
+    //*/
+    var list = [];
+    for (var j = 0; j < order.length; j++)
+      list.push({'order': order[j], 'matches': matches[j]});
+
+    //2) sort:
+    list.sort(function(a, b) {
+      return ((a.matches < b.matches) ? -1 : ((a.matches == b.matches) ? 0 : 1));
+    //Sort could be modified to, for example, sort on the age
+    // if the name is the same.
+});
+    list.reverse();
+
+//3) separate them back out:
+for (var k = 0; k < list.length; k++) {
+    order[k] = list[k].order;
+    matches[k] = list[k].matches;
+}
+//    console.log(order);
+ //   console.log(matches);
 
     var entries = [];
     for (i in order) {
@@ -105,6 +163,7 @@ class Firebase {
         new Entry(allNames[j], author_j, image_j, user_tags_j));
     }
 
+    //console.log(entries)
 
     return entries;
   }
