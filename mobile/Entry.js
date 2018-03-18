@@ -1,19 +1,20 @@
+import React from 'react';
+
 class Entry {
-	constructor(name, author, image, tags, user_tags, score) { 
-		this.name = name;
-		this.author = author;
-		this.image = image;
-		this.tags = tags;
-		this.user_tags = user_tags;
-		this.score = score;
-	}
-	publishEntry(Entry e) {
-  		firebase.database().ref('entries/' + name).set({
-			tags: e.tags,
-			user_tags: e.user_tags,
-			score: e.score,
-			image: e.image
-			author: e.author
- 		});
-	}
+
+  constructor(name, author, image, user_tags) { 
+    this.name = name;
+    this.author = author;
+    this.image = image;
+    this.user_tags = user_tags;
+  }
+
+  publish(db) {
+    db.ref("entries/" + this.name).set({
+      user_tags: this.user_tags,
+      image: this.image,
+      author: this.author
+    });
+  }
 }
+export default Entry
