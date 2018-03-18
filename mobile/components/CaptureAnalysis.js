@@ -136,9 +136,9 @@ class CaptureAnalysis extends React.Component {
     updateUI = async (ok) => {
         let fb = new Firebase();
         var oui = await fb.searchEntriesByTags(["cup"]);
-        console.log("RESULTS");
         // console.log(oui[0]);
         if (oui.length > 0){
+            console.log("RESULT FOUND");
             this.props.navigation.navigate({
                 routeName: 'ResultFound',
                 params: { data: oui[0] }
