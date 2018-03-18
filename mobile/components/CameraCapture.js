@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera, Permissions, FileSystem } from 'expo';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 class CameraCapture extends React.Component {
     constructor(props) {
@@ -40,14 +41,55 @@ class CameraCapture extends React.Component {
                                     this.takePicture.bind(this)
                                 }>
                                 <View style={{
-                                    height: 70,
-                                    width: 70,
-                                    backgroundColor: "grey",
+                                    height: 80,
+                                    width: 80,
+                                    backgroundColor: "white",
+                                    borderColor: '#D3D3D3',
+                                    borderWidth: 7,
                                     borderRadius: 50,
-                                    marginLeft: 150,
-                                    marginBottom: 20
+                                    marginLeft: 145,
+                                    marginBottom: 45
                                 }}/>
                             </TouchableOpacity>
+
+                            <TouchableOpacity
+                                onPress={
+                                    this.takePicture.bind(this)
+                                }>
+                                <View style={{
+                                    height: 55,
+                                    width: 55,
+                                    backgroundColor: "white",
+                                    borderColor: '#D3D3D3',
+                                    borderWidth: 7,
+                                    borderRadius: 50,
+                                    marginLeft: 50,
+                                    marginBottom: 40
+                                }}>
+                                    <MaterialCommunityIcons 
+                                        name='image-filter-hdr'
+                                        size={40}
+                                        style={{
+                                            color: '#A3A3A3',
+                                        }}/>
+                                </View>
+                            </TouchableOpacity>
+
+                            {/* <MaterialCommunityIcons 
+                                name='image-filter-hdr'
+                                size={27}
+                                style={{
+                                    height: 40,
+                                    width: 40,
+                                    backgroundColor: "white",
+                                    color: 'grey',
+                                    borderColor: '#D3D3D3',
+                                    borderWidth: 7,
+                                    borderRadius: 50,
+                                    marginLeft: 15,
+                                    marginBottom: 25,
+                                }}
+                                onPress={this.takePicture.bind(this)}/> */}
                         </View>
                     </Camera>
                 </View>

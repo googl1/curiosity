@@ -1,61 +1,71 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, Button} from 'react-native';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
 class CaptureAnalysis extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {images: []};
+        this.state = { 
+            tagOne: null,
+            tagTwo: null,
+            tagThree: null
+         };
+         this.runImageAnalysis = this.runImageAnalysis.bind(this);
+         this.goBack = this.goBack.bind(this);
+         this.updateUI = this.updateUI.bind(this);
     }
-    render() {
 
+    componentDidMount() {
         this.runImageAnalysis();
+    }
 
+    render() {
         return (
-            <View style={{ 
+            <View style={{
                 flex: 1,
             }}>
-            <Image source={{uri: this.props.navigation.state.params.img}}
-                    style={{flex: 3}}/>
-            <View style={{flex: 2, backgroundColor: 'mediumaquamarine'}}>
-            <Text style= {{ height:50, fontSize:25,color:'white',fontWeight:'bold'}}> Object Does Not Exist </Text>
-            <Text style = {{fontSize:20,color:'white',fontWeight:'bold'}}>Suggested Tags:</Text>
-            <View style={{  justifyContent:'center', flex:1}}>
-            <View style={{margin:20, flexDirection:'row', justifyContent:'space-between'}}>
-        <Button
-            title= "fungus"
-            color = "green"
-            
-        
-        />
-        <Button
-            title= "potato"
-            color = "green"
-        />
-        <Button
-            title= "vegetable"
-            color = "green"
-        />
-        </View>
-            </View>
+                <Image source={{ uri: this.props.navigation.state.params.img }}
+                    style={{ flex: 3 }} />
+                <View style={{ flex: 2, backgroundColor: 'mediumaquamarine' }}>
+                    <Text style={{ height: 50, fontSize: 25, color: 'white', fontWeight: 'bold' }}> Object Does Not Exist </Text>
+                    <Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold' }}>Suggested Tags:</Text>
+                    <View style={{ justifyContent: 'center', flex: 1 }}>
+                        <View style={{ margin: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Button
+                                title={this.state.tagOne == null? '': this.state.tagOne}
+                                color="green"
+                                onPress={this.handlePress}
+                            />
+                            <Button
+                                title={this.state.tagTwo == null? '': this.state.tagTwo}
+                                color="green"
+                                onPress={this.handlePress}
+                            />
+                            <Button
+                                title={this.state.tagThree == null? '': this.state.tagThree}
+                                color="green"
+                                onPress={this.handlePress}
+                            />
+                        </View>
+                    </View>
 
-        <Text style = {{fontSize:20,color:'white',fontWeight:'bold'}}>Not A Match?</Text>
-    
-        <View style={{  justifyContent:'flex-end', flex:1}}>
-            <View style={{margin:20, flexDirection:'row', justifyContent:'space-between'}}>
-        <Button
-            title= "RE-TAKE"
-            color = "orange"
-        />
-        <Button
-            title= "ADD NEW"
-            color = "aqua"
-        />
-        </View>
-        </View>
+                    <Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold' }}>Not A Match?</Text>
 
+                    <View style={{ justifyContent: 'flex-end', flex: 1 }}>
+                        <View style={{ margin: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Button
+                                title="RE-TAKE"
+                                color="orange"
+                                onPress={this.goBack}
+                            />
+                            <Button
+                                title="ADD NEW"
+                                color="aqua"
+                                onPress={this.handlePress}
+                            />
+                        </View>
+                    </View>
+                </View>
             </View>
-           
-        </View>
         );
     }
 
@@ -67,7 +77,7 @@ class CaptureAnalysis extends React.Component {
             uri: imgUri,
             name: 'imageData.jpg',
             type: "image/jpg"
-          }
+        }
         );
 
         const config = {
@@ -83,32 +93,44 @@ class CaptureAnalysis extends React.Component {
         uri = uri + '?visualFeatures=Categories,Color,Description';
 
         fetch(uri, config)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(myJson) {
-            console.log(myJson)
-            console.log("CATEGORIES:\n")
-            console.log(myJson.categories)
-            console.log("COLOR:\n")
-            console.log(myJson.color)
-            console.log("DESCRIPTION:\n")
-            console.log(myJson.description)
-            console.log("TAGS:\n")
-            console.log(myJson.description.tags)
-            console.log("TAGS AS ARRAY:\n")
-            var ok = JSON.parse(JSON.stringify(myJson.description.tags))
-            console.log(ok)
-            // const todos = myJson.categories;
-            // console.log("NOW THE REAL DEAL")
-            // for (var i = 0; i < 3; i++){
-            //     images.push(ok[i]);
-            // }
-        })
-        .catch(error => {
-            console.log("ERROR MESSAGE IS: \n");
-            console.log(error);
-        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((myJson) => {
+                console.log(myJson)
+                console.log("CATEGORIES:\n")
+                console.log(myJson.categories)
+                console.log("COLOR:\n")
+                console.log(myJson.color)
+                console.log("DESCRIPTION:\n")
+                console.log(myJson.description)
+                console.log("TAGS:\n")
+                console.log(myJson.description.tags)
+                console.log("TAGS AS ARRAY:\n")
+                let ok = JSON.parse(JSON.stringify(myJson.description.tags))
+                console.log(ok)
+                // const todos = myJson.categories;
+                this.updateUI(ok);
+            })
+            .catch(error => {
+                console.log("ERROR MESSAGE IS: \n");
+                console.log(error);
+            });
+    };
+
+    handlePress(event) {
+        console.log('Pressed!');
+    };
+
+    goBack(event){
+        this.props.navigation.navigate('Capture');
+    };
+
+    updateUI = (ok) => {
+        console.log("NOW THE REAL DEAL")
+        this.setState({tagOne: ok[0]});
+        this.setState({tagTwo: ok[1]});
+        this.setState({tagThree: ok[2]});
     };
 }
 
