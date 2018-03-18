@@ -171,7 +171,7 @@ class Firebase {
     var entries = [];
     for (i in order) {
       var j = order[i];
-      if (matches[j] == 0)
+      if (matches[i] == 0)
         break;
 
       var author_j = (await (this.getAuthor(j)));
@@ -181,8 +181,6 @@ class Firebase {
       entries.push(
         new Entry(allNames[j], author_j, image_j, user_tags_j));
     }
-
-    //console.log(entries)
 
     return entries;
   }
