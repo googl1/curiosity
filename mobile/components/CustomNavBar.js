@@ -8,8 +8,8 @@ import HomeScreen from './HomeScreen';
 import Profile from './Profile';
 import CameraCapture from './CameraCapture';
 import Search from './Search';
-import MapPreview from './MapPreview'
-import CaptureAnalysis from './CaptureAnalysis'
+import MapPreview from './MapPreview';
+import CaptureAnalysis from './CaptureAnalysis';
 import AddingNewData1 from './AddingNewData1';
 
 
