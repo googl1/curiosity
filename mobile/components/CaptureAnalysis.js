@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Button } from 'react-native';
+import Firebase from './../Firebase.js';
 
 class CaptureAnalysis extends React.Component {
     constructor(props) {
@@ -7,7 +8,8 @@ class CaptureAnalysis extends React.Component {
         this.state = { 
             tagOne: null,
             tagTwo: null,
-            tagThree: null
+            tagThree: null,
+            found: false
          };
          this.runImageAnalysis = this.runImageAnalysis.bind(this);
          this.goBack = this.goBack.bind(this);
@@ -24,27 +26,36 @@ class CaptureAnalysis extends React.Component {
                 flex: 1,
             }}>
                 <Image source={{ uri: this.props.navigation.state.params.img }}
-                    style={{ flex: 3 }} />
+                    style={{ 
+                        flex: 2,
+                        backgroundColor: 'mediumaquamarine'
+                    }} />
                 <View style={{ flex: 2, backgroundColor: 'mediumaquamarine' }}>
-                    <Text style={{ height: 50, fontSize: 25, color: 'white', fontWeight: 'bold' }}> Object Does Not Exist </Text>
+                    <Text style={{ height: 50, fontSize: 25, color: 'white', fontWeight: 'bold' }}> 
+                        {this.state.found? 'Object not found': 'Running analysis...'}
+                    </Text>
                     <Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold' }}>Suggested Tags:</Text>
                     <View style={{ justifyContent: 'center', flex: 1 }}>
-                        <View style={{ margin: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Button
-                                title={this.state.tagOne == null? '': this.state.tagOne}
-                                color="green"
-                                onPress={this.handlePress}
-                            />
-                            <Button
-                                title={this.state.tagTwo == null? '': this.state.tagTwo}
-                                color="green"
-                                onPress={this.handlePress}
-                            />
-                            <Button
-                                title={this.state.tagThree == null? '': this.state.tagThree}
-                                color="green"
-                                onPress={this.handlePress}
-                            />
+                        <View style={{ margin: 20}}>
+                            {this.state.found? 
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}} >
+                                    <Button
+                                        title={this.state.tagOne == null? '': this.state.tagOne}
+                                        color="green"
+                                        onPress={this.handlePress}
+                                    />
+                                    <Button
+                                        title={this.state.tagTwo == null? '': this.state.tagTwo}
+                                        color="green"
+                                        onPress={this.handlePress}
+                                    />
+                                    <Button
+                                        title={this.state.tagThree == null? '': this.state.tagThree}
+                                        color="green"
+                                        onPress={this.handlePress}
+                                    /> 
+                                </View> : <View/>
+                            }
                         </View>
                     </View>
 
@@ -97,18 +108,8 @@ class CaptureAnalysis extends React.Component {
                 return response.json();
             })
             .then((myJson) => {
-                console.log(myJson)
-                console.log("CATEGORIES:\n")
-                console.log(myJson.categories)
-                console.log("COLOR:\n")
-                console.log(myJson.color)
-                console.log("DESCRIPTION:\n")
-                console.log(myJson.description)
-                console.log("TAGS:\n")
-                console.log(myJson.description.tags)
-                console.log("TAGS AS ARRAY:\n")
                 let ok = JSON.parse(JSON.stringify(myJson.description.tags))
-                console.log(ok)
+                // console.log(ok)
                 // const todos = myJson.categories;
                 this.updateUI(ok);
             })
@@ -126,11 +127,22 @@ class CaptureAnalysis extends React.Component {
         this.props.navigation.navigate('Capture');
     };
 
-    updateUI = (ok) => {
-        console.log("NOW THE REAL DEAL")
-        this.setState({tagOne: ok[0]});
-        this.setState({tagTwo: ok[1]});
-        this.setState({tagThree: ok[2]});
+    updateUI = async (ok) => {
+        let fb = new Firebase();
+        var oui = await fb.searchEntriesByTags(["orchid"]);
+        console.log("RESULTS");
+        // console.log(oui[0]);
+        if (oui.length > 0){
+            this.props.navigation.navigate({
+                routeName: 'ResultFound',
+                params: { data: oui[0] }
+            });
+        }else {   
+            this.setState({tagOne: ok[0]});
+            this.setState({tagTwo: ok[1]});
+            this.setState({tagThree: ok[2]});
+            this.setState({found: true});
+        }
     };
 }
 
