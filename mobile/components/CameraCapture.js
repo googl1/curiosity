@@ -1,8 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Camera, Permissions } from 'expo';
-import CuriosityBar from './NavigationBar.js'
-
+import { Camera, Permissions, FileSystem, Vibration } from 'expo';
 
 class CameraCapture extends React.Component {
     constructor(props) {
@@ -12,6 +10,7 @@ class CameraCapture extends React.Component {
     state = {
         hasCameraPermission: null,
         type: Camera.Constants.Type.back,
+        photoId: 1,
     };
 
     async componentWillMount() {
@@ -28,7 +27,7 @@ class CameraCapture extends React.Component {
         } else {
             return (
                 <View style={{ flex: 10 }}>
-                    <Camera style={{ flex: 9 }} type={this.state.type}>
+                    <Camera style={{ flex: 9 }} type={this.state.type} ref={ref => { this.camera = ref; }}>
                         <View
                             style={{
                                 flex: 10,
@@ -36,19 +35,32 @@ class CameraCapture extends React.Component {
                                 flexDirection: 'row',
                                 alignItems: 'flex-end'
                             }}>
-                            <View style={{
-                                height: 50,
-                                width: 50,
-                                backgroundColor: "green",
-                                borderRadius: 50,
-                                justifyContent: 'center'
-                            }}/>
+                            <TouchableOpacity
+                                onPress={
+                                    this.takePicture.bind(this)
+                                }>
+                                <View style={{
+                                    height: 70,
+                                    width: 70,
+                                    backgroundColor: "grey",
+                                    borderRadius: 50,
+                                    marginLeft: 150,
+                                    marginBottom: 20
+                                }}/>
+                            </TouchableOpacity>
                         </View>
                     </Camera>
-                    {/* <View style={{backgroundColor: "red", flex: 1}}/> */}
-                    <CuriosityBar style={{flex: 1}}/>
                 </View>
             );
+        }
+    }
+
+    takePicture = async function() {
+        if (this.camera) {
+          this.camera.takePictureAsync().then(data => {
+              console.log(data.uri);
+              Vibration.vibrate();
+          });
         }
     }
 }

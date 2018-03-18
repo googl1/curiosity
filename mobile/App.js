@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomNavBar from './components/CustomNavBar'
 import View from 'react-native';
 import CameraCapture from './components/CameraCapture.js'
 import * as firebase from 'firebase';
@@ -22,8 +23,6 @@ componentDidMount() {
 }
 
   render() {
-    return (
-      <CameraCapture/>
-    );
+    return <CustomNavBar />;
   }
 }
