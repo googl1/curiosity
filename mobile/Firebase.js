@@ -181,13 +181,7 @@ class Firebase {
       entries.push(
         new Entry(allNames[j], author_j, image_j, user_tags_j));
     }
-
-<<<<<<< HEAD
-    //console.log(entries)
-    console.log(entries);
-
-=======
->>>>>>> 2d7e02969aff3a74db7d8e9ef04f53daec0ae250
+    
     return entries;
   }
 
