@@ -17,10 +17,11 @@ class HomeScreen extends React.Component {
                 }}>
                 {/* <Text>Home Screen</Text> */}
                 <Image 
-                    source={{uri: './../assets/logo.png'}}
+                    source={require('./../assets/splash.png')}
                     style={{
-                        height: 400,
-                        width: 400
+                        height: 800,
+                        width: 400,
+                        backgroundColor: 'mediumaquamarine'
                     }}  />
             </View>
         );

@@ -8,10 +8,10 @@ import HomeScreen from './HomeScreen';
 import Profile from './Profile';
 import CameraCapture from './CameraCapture';
 import Search from './Search';
-import MapPreview from './MapPreview';
-import CaptureAnalysis from './CaptureAnalysis';
+import MapPreview from './MapPreview'
+import CaptureAnalysis from './CaptureAnalysis'
+import ResultFound from './ResultFound'
 import AddingNewData1 from './AddingNewData1';
-
 
 const CustomBar = TabNavigator(
     {
@@ -116,6 +116,9 @@ const Routes = StackNavigator(
         },
         HomeScreen: {
             screen: HomeScreen
+        },
+        ResultFound: {
+            screen: ResultFound
         }
     },
     {
