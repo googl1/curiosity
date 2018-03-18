@@ -13,7 +13,6 @@ import CaptureAnalysis from './CaptureAnalysis'
 
 const CustomBar = TabNavigator(
     {
-        // Home: { screen: HomeScreen },
         Profile: { 
             screen: Profile,
             navigationOptions: {
@@ -109,10 +108,14 @@ const Routes = StackNavigator(
         },
         CaptureAnalysis: {
             screen: CaptureAnalysis
+        },
+        HomeScreen: {
+            screen: HomeScreen
         }
     },
     {
-        headerMode: 'none'
+        headerMode: 'none',
+        initialRouteName: 'HomeScreen'
     }
 )
 export default class CustomNavBar extends React.Component{
