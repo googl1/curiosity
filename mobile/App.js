@@ -14,12 +14,14 @@ componentDidMount() {
   let conf  = new FirebaseConfig();
   firebase.initializeApp(conf.getConfig());
 
-  // dummy entry
-  let e = new Entry("Dog", "George", "_image", "animal");
+  /*
+  // dummy entries
+  let e = new Entry("Dog", "George", "_image", ["animal", "friendly"]);
   var db = firebase.database();
-  let e1 = new Entry("Cat", "Bobby", "_image", "animal");
+  let e1 = new Entry("Cat", "Bobby", "_image", ["animal", "evil"]);
   e.publish(db);
   e1.publish(db);
+  */
 }
 
   render() {
