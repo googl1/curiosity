@@ -10,6 +10,8 @@ import CameraCapture from './CameraCapture';
 import Search from './Search';
 import MapPreview from './MapPreview'
 import CaptureAnalysis from './CaptureAnalysis'
+import AddingNewData1 from './AddingNewData1';
+
 
 const CustomBar = TabNavigator(
     {
@@ -108,6 +110,9 @@ const Routes = StackNavigator(
         },
         CaptureAnalysis: {
             screen: CaptureAnalysis
+        },
+        AddData:{
+            screen: AddingNewData1
         },
         HomeScreen: {
             screen: HomeScreen

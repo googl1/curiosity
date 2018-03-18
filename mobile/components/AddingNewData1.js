@@ -1,7 +1,6 @@
 import React from 'react';
-import ProgressBar from 'react-native-progress/Bar';
+//import ProgressBar from 'react-native-progress/Bar';
 import { Text, View, Image, StyleSheet,AppRegistry, TextInput, Button } from 'react-native';
-
 
 class AddingNewData1 extends React.Component {
     
@@ -11,27 +10,18 @@ class AddingNewData1 extends React.Component {
       }
     render() {
         
-
         return (
             <View style = {{
-                flex: 1,
+                flex: 10,
             }}>
             <View style = {{flex: 1, backgroundColor: 'chartreuse'}}>
                 <Text style = {{fontSize:25,color:'white',fontWeight:'bold'}}> Description
                 </Text>
             </View>
             <View style = {{flex: 9, backgroundColor: 'aquamarine'}}>
-                <Image source = {{uri: this.props.navigation.state.params.img}}
-                id = "round pic">
-                <Script> document.getElementById('round pic').style.borderRadius = 50</Script>
-                </Image>
-                <Image 
-                indicator={ProgressBar}
-                color = 'yellow'
-                progress = '0.33'
-                styleAttr = "Horizontal"/>
+               
 
-    
+   
              
              <Text style = {{fontSize:20,color:'white',fontWeight:'bold'}}>What Would You Name This?</Text>
              <TextInput
@@ -66,7 +56,7 @@ class AddingNewData1 extends React.Component {
                     borderRadius:50,
                     }}
                 title = ">"
-                onPress = {}
+                onPress 
                 />
              </View>
             </View>
