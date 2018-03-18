@@ -70,7 +70,7 @@ class CameraCapture extends React.Component {
                                         name='image-filter-hdr'
                                         size={40}
                                         style={{
-                                            color: '#A3A3A3'
+                                            color: '#A3A3A3',
                                         }}/>
                                 </View>
                             </TouchableOpacity>

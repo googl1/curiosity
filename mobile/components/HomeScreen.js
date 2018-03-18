@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { View, Text, Image } from 'react-native';
 import CameraCapture from './CameraCapture';
 
 class HomeScreen extends React.Component {
@@ -12,9 +12,16 @@ class HomeScreen extends React.Component {
             <View style={{ 
                     flex: 1, 
                     alignItems: 'center', 
-                    justifyContent: 'center' 
+                    justifyContent: 'center',
+                    backgroundColor: 'mediumaquamarine',
                 }}>
-                <Text>Home Screen</Text>
+                {/* <Text>Home Screen</Text> */}
+                <Image 
+                    source={{uri: './../assets/logo.png'}}
+                    style={{
+                        height: 400,
+                        width: 400
+                    }}  />
             </View>
         );
     }
