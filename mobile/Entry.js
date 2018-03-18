@@ -7,6 +7,7 @@ class Entry {
     this.author = author;
     this.image = image;
     this.user_tags = user_tags;
+    //FIXME: add AWS tags
   }
 
   publish(db) {
