@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
+
+
 class CaptureAnalysis extends React.Component {
     constructor(props) {
         super(props);
@@ -60,7 +62,7 @@ class CaptureAnalysis extends React.Component {
                             <Button
                                 title="ADD NEW"
                                 color="aqua"
-                                onPress={this.handlePress}
+                                onPress={this.goForward}
                             />
                         </View>
                     </View>
@@ -124,6 +126,10 @@ class CaptureAnalysis extends React.Component {
 
     goBack(event){
         this.props.navigation.navigate('Capture');
+    };
+
+    goForward(event){
+        this.props.navigation.navigate('AddData');
     };
 
     updateUI = (ok) => {
