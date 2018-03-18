@@ -1,4 +1,9 @@
 node_modules/
+<<<<<<< HEAD
 firebaseConfig.js
 FirebaseConfig.js
+=======
+>>>>>>> 06ca8a91ad45c8d106922da0c7561df74c374fee
 .expo
+FirebaseConfig.js
+package-lock.json
