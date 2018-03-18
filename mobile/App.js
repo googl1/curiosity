@@ -9,18 +9,17 @@ export default class App extends React.Component {
 componentDidMount() {
 
   // Initialize Firebase
-  //let fb = new Firebase();
+ // let fb = new Firebase();
 
   /*
   // dummy entries
-  let e = new Entry("Dog", "George", "_image", ["animal", "friendly"]);
+  let e = new Entry("Dog", "George", "_image", ["animal", "friendly"], ["dog", "terrier"]);
   let e1 = new Entry("Cat", "Bobby", "_image", ["animal", "evil"]);
-  e.publish(db);
-  e1.publish(db);
-  */
+  fb.publishEntry(e);
+  //db.publish(db);
   //console.debug(fb.searchEntriesByTags(['orchid','cactus']));
   // fb.searchEntriesByString("Timbit");
-
+*/
 }
 
   render() {

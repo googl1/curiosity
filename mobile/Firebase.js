@@ -10,42 +10,65 @@ class Firebase {
     this.db = firebase.database();
   }
 
-  publisEntry(e) {
-    /*
-    // get next index
+  async publishEntry(e) {
+    
+    // get everything
     var allNames = this.unfuck(await this.getAllNames());
+    var allAuthors = this.unfuck(await this.getAllAuthors());
+    var allImages = this.unfuck(await this.getAllImages());
     var n = allNames.length;
-    n = n + 1;
-*/
-    this.writeNewPost(e.names, 'names');
-    this.writeNewPost(e.authors, 'authors');
-    this.writeNewPost(e.images, 'images');
-    this.writeNewPost(e.tags, 'tags');
-    this.writeNewPost(e.user_tags, 'user_tags');
+    var allTags = this.unfuck(await this.getAllTags(n));
+    var allUserTags = this.unfuck(await this.getAllUserTags(n));
 
-    /*db.ref("entries/names/" + n).set({
-      e.name
-      user_tags: this.user_tags,
-      image: this.image,
-      author: this.author
-    });*/
+    for (i in allTags)
+      allTags[i] = this.unfuck(allTags[i]);
+    for (i in allTags)
+      allUserTags[i] = this.unfuck(allUserTags[i]);
+
+    this.writeNewPost(allNames, 'names', e.name, n);
+    this.writeNewPost(allAuthors, 'authors', e.author, n);
+    this.writeNewPost(allImages, 'images', e.image, n);
+    this.writeNewPost(this.makeKeyValue(allTags), 'tags', e.tags, n);
+    this.writeNewPost(this.makeKeyValue(allUserTags), 'user_tags', e.user_tags, n);
   }
 
-  writeNewPost(data, name) {
-    // A post entry.
-    var postData = data;
-    // Get a key for a new Post.
-    var newPostKey = firebase.database().ref().child(name).push().key;
+  makeKeyValue(a) {
+    for (i in a) {
+      var object = {};
 
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates['/names/' + newPostKey] = postData;
+      for (j in a[i]) {
+        object[j] = a[i][j]
+      }
+      a[i] = object;
+    }
+    return a;
+  }
 
-    return this.db.ref().update(updates);
+  writeNewPost(data, name, e, n) {
+    var object = {};
+
+    for (var i = 0; i < n; i++) {
+      object[i] = data[i];
+    }
+    object[n] = e;
+    this.db.ref("entries1/" + name).set(object);
   }
 
   async getAllNames() {
     return await this.db.ref("entries/names").once("value", function(snapshot) {
+      return snapshot.val();
+    });
+  }
+
+  async getAllAuthors() {
+    return await this.db.ref("entries/authors").once("value", function(snapshot) {
+      //console.debug(snapshot.val());
+      return snapshot.val();
+    });
+  }
+
+  async getAllImages() {
+    return await this.db.ref("entries/images").once("value", function(snapshot) {
       //console.debug(snapshot.val());
       return snapshot.val();
     });
@@ -57,6 +80,18 @@ class Firebase {
     for (i = 0; i < n; i++) {
       var ref = this.db.ref("entries/tags/" + i);
       tags[i] =  this.unfuck(await ref.orderByChild("tags").once("value", function(snapshot) {
+        return snapshot.val();
+      }));
+    }
+    return tags;
+  }
+
+  async getAllUserTags(n) {
+    var tags = {};
+    //console.debug(n);
+    for (i = 0; i < n; i++) {
+      var ref = this.db.ref("entries/user_tags/" + i);
+      tags[i] =  this.unfuck(await ref.orderByChild("user_tags").once("value", function(snapshot) {
         return snapshot.val();
       }));
     }
