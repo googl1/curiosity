@@ -19,6 +19,7 @@ componentDidMount() {
   e1.publish(db);
   */
 //  console.debug(fb.searchEntriesByTags(['orchid','cactus']));
+  // fb.searchEntriesByString("Timbit");
 
 }
 
